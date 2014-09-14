@@ -6,10 +6,11 @@
         <ul>
             <?php 
             foreach ($this->view->goods as $good) {
-                echo "<li>{$good->getName()}</li>";
+                echo "<li>{$good->getName()}, \${$good->getPrice()} (<a href=\"index.php?ctrl=good&act=edit&id={$good->getID()}\">edit</a>)</li>";
             }
             ?>
         </ul>
+        <a href="index.php?ctrl=good&act=edit">add new</a>
     </body>
 </html>
 

@@ -3,9 +3,11 @@
 namespace model\entity;
 
 class Good {
+    private $id;
+    private $description;
     private $name;
     private $price;
-    private $category;
+    private $category_id;
     
     public function getName() {
         return $this->name;
@@ -15,8 +17,8 @@ class Good {
         return $this->price;
     }
 
-    public function getCategory() {
-        return $this->category;
+    public function getCategory_id() {
+        return $this->category_id;
     }
 
     public function setName($name) {
@@ -27,8 +29,24 @@ class Good {
         $this->price = $price;
     }
 
-    public function setCategory($category) {
-        $this->category = $category;
+    public function setCategory_id($category) {
+        $this->category_id = $category;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
     }
 
 
