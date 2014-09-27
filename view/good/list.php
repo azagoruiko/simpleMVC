@@ -11,6 +11,7 @@
             ?>
         </ul>
         <a href="index.php?ctrl=good&act=edit">add new</a>
+      
     </body>
 </html>
 

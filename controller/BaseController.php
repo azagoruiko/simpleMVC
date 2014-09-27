@@ -23,6 +23,6 @@ class BaseController {
     }
     
     protected function redirect($where) {
-        header("location: $where.php");
+        header("location: $where");
     }
 }
