@@ -31,7 +31,7 @@ class UserController extends BaseController {
                 return 'login';
             }
         } else {
-            return 'login';
+            return 'login'; // Hello!
         }
     }
 }
