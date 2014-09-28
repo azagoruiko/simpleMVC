@@ -1,13 +1,16 @@
 <?php
 namespace controller;
 
+use PDO;
+use util\MySQL;
 use util\Request;
 use util\View;
+use view\Layout;
 
 class FrontController {
     private $view;
     function start() {
-        \util\MySQL::$db = new \PDO('mysql:host=localhost;dbname=simplemvc', 'simplemvc', 'mypassword');
+        MySQL::$db = new PDO('mysql:host=localhost;dbname=simplemvc', 'simplemvc', 'mypassword');
         
         $this->view = new View();
         session_start();
@@ -31,6 +34,10 @@ class FrontController {
             $action = 'index';
         }
         $view = $ctrl->{"{$action}Action"}();
-        include "view/$ctrlName/$view.php";
+        $layOut = new Layout();
+        $layOut->setCtrlName($ctrlName);
+        $layOut->setView($this->view);
+        $layOut->render($view);
+        //include "view/$ctrlName/$view.php";
     }
 }
