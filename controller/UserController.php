@@ -1,5 +1,6 @@
 <?php
 namespace controller;
+use model\entity\User;
 use model\service\UserService;
 use util\Request;
 class UserController extends BaseController {
@@ -33,5 +34,43 @@ class UserController extends BaseController {
         } else {
             return 'login'; // Hello!
         }
+    }
+    
+    function usersAction() {//
+        $this->view->users = $this->getUserService()->getUserList();
+        return 'users';//
+    }//
+    
+    function editUserAction() {//
+        $r = $this->getRequest();//
+        
+        if (!empty($r->getGetValue('id'))) {//
+            $user = $this->getUserService()->findId($r->getGetValue('id'));//
+        } else {//
+            $user = new User();//
+        }//
+        
+        if (!$user) {//
+            $user = new User();//
+        }//
+        
+        if ($r->isPost()) {//
+            $user->setId($r->getPostValue('id'));
+            $user->setName($r->getPostValue('name'));
+            $user->setEmail($r->getPostValue('email'));
+            $user->setPassword($r->getPostValue('password'));
+            if (!$this->getUserService()->addUser($user)) {//
+                $error = \util\MySQL::$db->errorInfo();//
+                print_r($error);//
+                $this->view->message = 'Error! ' . $error[2];//
+            }//
+            else if ($this->getUserService()->addUser($user)) {
+                $this->view->message = "Is Fain!";
+        }
+        }//
+        
+        $this->view->user = $user;//
+        $this->view->users = $this->getUserService()->getUserList();//
+        return 'editUser';//
     }
 }
