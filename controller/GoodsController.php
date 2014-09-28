@@ -20,6 +20,7 @@ class GoodsController extends BaseController {
     }
     
     function listAction() {
+        $this->view->basket = $this->getRequest()->getSessionValue('basket');
         $this->view->category = $this->getRequest()->getGetValue('cat');
         $this->view->goods = $this->getGoodService()->getList($this->view->category);
         return 'list';
@@ -59,6 +60,29 @@ class GoodsController extends BaseController {
         $this->view->good = $good;
         $this->view->cats = $this->getGoodService()->getCategoruiesList();
         return 'edit';
+    }
+    
+    function buyAction() {
+        $r = $this->getRequest();
+        $basket = $r->getSessionValue('basket');
+        if (empty($basket)) {
+            $basket = [];
+        }
+        
+        $good = $this->getGoodService()->find($r->getGetValue('id'));
+        if (isset($basket[$good->getID()])) {
+            $basket[$good->getID()]['amount']++;
+            $basket[$good->getID()]['sum'] += $good->getPrice();
+        } else {
+            $basket[$good->getID()] = ['amount' => 1, 'good' => $good, 'sum' => $good->getPrice()];
+        }
+        $r->setSessionValue('basket', $basket);
+        $this->redirect("index.php?ctrl=good&act=list&cat={$good->getCategory_id()}");
+    }
+    
+    function clearBasketAction() {
+        $this->getRequest()->setSessionValue('basket', []);
+        $this->redirect("index.php?ctrl=good&act=list&cat={$this->getRequest()->getGetValue('cat')}");
     }
     
     function indexAction() {

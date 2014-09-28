@@ -19,6 +19,9 @@ class Request {
     }
     
     function getSessionValue($name) {
+        if (!isset($_SESSION[$name])) {
+            $_SESSION[$name] = '';
+        }
         return $_SESSION[$name];
     }
     
