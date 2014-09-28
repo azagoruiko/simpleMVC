@@ -45,12 +45,13 @@ class UserController extends BaseController {
         $r = $this->getRequest();//
         
         if (!empty($r->getGetValue('id'))) {//
-            $user = $this->getUserService()->findId($r->getGetValue('id'));//
+            $user = $this->getUserService()->find($r->getGetValue('id'));//
         } else {//
             $user = new User();//
         }//
         
         if (!$user) {//
+            $this->view->message = 'User not found! Will create a new one!';
             $user = new User();//
         }//
         
@@ -64,7 +65,7 @@ class UserController extends BaseController {
                 print_r($error);//
                 $this->view->message = 'Error! ' . $error[2];//
             }//
-            else if ($this->getUserService()->addUser($user)) {
+            else {
                 $this->view->message = "Is Fain!";
         }
         }//

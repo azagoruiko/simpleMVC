@@ -12,33 +12,20 @@ class UserService {
      * @param string $name
      * @return User
      */
-    function find($name) {
-//        $filename = "/var/www/data/users/$name";
-//        if (file_exists($filename)) {
-//            return unserialize(file_get_contents("/var/www/data/users/$name"));
-//        }
-//        return null;
-        //$user= new User();
-         
+    function findByName($name) {
         $stmt = \util\MySQL::$db->prepare("SELECT id, login, password, `e-mail` "
                 . " FROM users WHERE login = :log_in");        
         $stmt->bindParam('log_in', $name);        
         $stmt->execute();
         return $stmt->fetchObject('model\entity\User');         
-     }
+    }
     
     function authorize($name, $password) {
-         
-        $user = $this->find($name);
-       // echo $user->getName();
-       if (!empty($user)) {
-          
+        $user = $this->findByName($name);
+        if (!empty($user)) {
             return $user->getPassword() === $password;
         }
         return false;
-        
-        
-        
     }
         
     function getUserList() {//
@@ -54,7 +41,7 @@ class UserService {
         return $users;//
     }//
     
-    function findId($id) {//
+    function find($id) {//
         $stmt = \util\MySQL::$db->prepare("SELECT id, name, email, password FROM users WHERE id=:id");//
         $stmt->bindParam('id', $id);//
         $stmt->execute();//
@@ -63,7 +50,7 @@ class UserService {
     
     function addUser(User $user) {//
         if (empty($user->getId())) {//
-            $stmt = \util\MySQL::$db->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password");//
+            $stmt = \util\MySQL::$db->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");//
         } else {//
             $stmt = \util\MySQL::$db->prepare("UPDATE users SET name=:name, email=:email, password=:password where id=:id");//
             $stmt->bindParam('id', $user->getId());//
