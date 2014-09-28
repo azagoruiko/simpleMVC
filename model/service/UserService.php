@@ -13,8 +13,8 @@ class UserService {
      * @return User
      */
     function findByName($name) {
-        $stmt = \util\MySQL::$db->prepare("SELECT id, login, password, `e-mail` "
-                . " FROM users WHERE login = :log_in");        
+        $stmt = \util\MySQL::$db->prepare("SELECT id, name, password, `email` "
+                . " FROM users WHERE name = :log_in");        
         $stmt->bindParam('log_in', $name);        
         $stmt->execute();
         return $stmt->fetchObject('model\entity\User');         
