@@ -1,8 +1,6 @@
-<html>
-    <head>
-        <title>List of goods of category <?php echo $this->view->category;?></title>
-    </head>
-    <body>
+
+<div class="row">
+    <div class="col-md-4">
         <h4>My Basket:</h4>
         <ul>
             <?php
@@ -17,20 +15,20 @@
             }
             ?>
         </ul>
-        <div><b>Total amount: <?php echo '$' . $sum; ?></b>&nbsp;<a href="index.php?ctrl=good&act=clearBasket&cat=<?php echo $this->view->category; ?>">Clear the basket</a></div>
-        
-        <ul>
+        <div><b>Total amount: <?php echo '$' . $sum; ?></b>&nbsp;<a class="btn btn-danger" href="index.php?ctrl=good&act=clearBasket&cat=<?php echo $this->view->category; ?>">Clear the basket</a></div>
+        </div>
+    <div class="col-md-8">
+        <ul class="list-group">
             <?php 
             foreach ($this->view->goods as $good) {
-                echo "<li>{$good->getName()}, \${$good->getPrice()} "
-                . "(<a href=\"index.php?ctrl=good&act=edit&id={$good->getID()}\">edit</a>)"
-                . "&nbsp; <a href=\"index.php?ctrl=good&act=buy&id={$good->getID()}\">Buy</a>"
+                echo "<li class=\"list-group-item\">{$good->getName()}, \${$good->getPrice()} "
+                . "<a class=\"btn btn-warning\" href=\"index.php?ctrl=good&act=edit&id={$good->getID()}\">edit</a>"
+                . "&nbsp; <a class=\"btn btn-info\" href=\"index.php?ctrl=good&act=buy&id={$good->getID()}\">Buy</a>"
                 . "</li>";
             }
             ?>
         </ul>
-        <a href="index.php?ctrl=good&act=edit">add new</a>
-      
-    </body>
-</html>
+        <a class="btn btn-success" href="index.php?ctrl=good&act=edit">add new</a>
+        </div>
+</div>
 
