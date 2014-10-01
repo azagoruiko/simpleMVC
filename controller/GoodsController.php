@@ -55,6 +55,8 @@ class GoodsController extends BaseController {
                 print_r($error);
                 $this->view->message = 'Error! ' . $error[2];
             }
+            else { $this->view->message = "Is Fain!";
+            }
         }
         
         $this->view->good = $good;

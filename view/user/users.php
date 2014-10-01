@@ -6,7 +6,7 @@
         <ul>
             <?php 
             foreach ($this->view->users as $user) {
-                echo "<li>{$user->getName()}, \${$user->getEmail()}, \${$user->getPassword()}) (<a href=\"index.php?ctrl=user&act=editUser&id={$user->getId()}\">edit</a>)</li>";
+                echo "<li>{$user->getName()}, {$user->getEmail()}, {$user->getPassword()}) (<a href=\"index.php?ctrl=user&act=editUser&id={$user->getId()}\">edit</a>)</li>";
             }
             ?>
         </ul>
