@@ -13,7 +13,7 @@ class UserService {
      * @return User
      */
     function findByName($name) {
-        $stmt = \util\MySQL::$db->prepare("SELECT id, name, password, `email` "
+        $stmt = \util\MySQL::$db->prepare("SELECT id, name, password, email, isAdmin "
                 . " FROM users WHERE name = :log_in");        
         $stmt->bindParam('log_in', $name);        
         $stmt->execute();
@@ -22,6 +22,7 @@ class UserService {
     
     function authorize($name, $password) {
         $user = $this->findByName($name);
+        $_SESSION['admin'] = $user->getIsAdmin();//
         if (!empty($user)) {
             return $user->getPassword() === $password;
         }
@@ -30,7 +31,7 @@ class UserService {
         
     function getUserList() {//
         $users = [];//
-        $stmt = \util\MySQL::$db->prepare("SELECT id, name, email, password FROM users");//
+        $stmt = \util\MySQL::$db->prepare("SELECT id, name, email, password, isAdmin FROM users");//
         
         $stmt->execute();//
         
@@ -42,7 +43,7 @@ class UserService {
     }//
     
     function find($id) {//
-        $stmt = \util\MySQL::$db->prepare("SELECT id, name, email, password FROM users WHERE id=:id");//
+        $stmt = \util\MySQL::$db->prepare("SELECT id, name, email, password, isAdmin FROM users WHERE id=:id");//
         $stmt->bindParam('id', $id);//
         $stmt->execute();//
         return $stmt->fetchObject('model\entity\User');//
@@ -50,9 +51,9 @@ class UserService {
     
     function addUser(User $user) {//
         if (empty($user->getId())) {//
-            $stmt = \util\MySQL::$db->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");//
+            $stmt = \util\MySQL::$db->prepare("INSERT INTO users (name, email, password, isAdmin) VALUES (:name, :email, :password, :isAdmin)");//
         } else {//
-            $stmt = \util\MySQL::$db->prepare("UPDATE users SET name=:name, email=:email, password=:password where id=:id");//
+            $stmt = \util\MySQL::$db->prepare("UPDATE users SET name=:name, email=:email, password=:password, isAdmin=:isAdmin where id=:id");//
             $stmt->bindParam('id', $user->getId());//
         }//
         
@@ -60,6 +61,7 @@ class UserService {
         $stmt->bindParam('name', $user->getName());//
         $stmt->bindParam('email', $user->getEmail());//
         $stmt->bindParam('password', $user->getPassword());//
+        $stmt->bindParam('isAdmin', $user->getIsAdmin());
         
         return $stmt->execute();//
     }
