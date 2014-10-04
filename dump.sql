@@ -1,7 +1,6 @@
-@@ -0,0 +1,105 @@
 -- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (x86_64)
 --
--- Host: 192.168.0.103    Database: simplemvc
+-- Host: localhost    Database: simplemvc
 -- ------------------------------------------------------
 -- Server version	5.5.38-0ubuntu0.14.04.1
 
@@ -36,7 +35,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,'electronics'),(2,'food'),(3,'electronics2'),(4,'food2');
+INSERT INTO `categories` VALUES (3,'electronics'),(4,'food');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,9 +52,8 @@ CREATE TABLE `goods` (
   `description` varchar(2048) DEFAULT NULL,
   `price` decimal(12,2) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `goods_ibfk_2` FOREIGN KEY (`id`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,8 +62,35 @@ CREATE TABLE `goods` (
 
 LOCK TABLES `goods` WRITE;
 /*!40000 ALTER TABLE `goods` DISABLE KEYS */;
-INSERT INTO `goods` VALUES (1,'iPhone 5S 640Gb','Nice expansive phone!',999.99,1),(2,'Samsung Galaxy S4 I9500','Nice phone',461.67,1),(3,'HTC One Dual SIM Gracier White UACRF','Nice phone',461.53,1),(4,'LG G2 32GB','Nice phone',446.07,1);
+INSERT INTO `goods` VALUES (19,'w','w',4.00,4),(20,'r','rt',5.00,3),(21,'ty','t',7.00,3),(22,'trututu','w',4.00,4),(23,'ww','r',1.00,3),(24,'tutu','tu',5.00,3),(25,'tutu','tu',5.00,3),(26,'yy','ee',99.00,4);
 /*!40000 ALTER TABLE `goods` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) DEFAULT NULL,
+  `good` varchar(256) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `sum` double DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (116,'Katya','r',1,5),(117,'Katya','ty',1,7),(118,'Katya','ty',1,7);
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -78,10 +103,10 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) DEFAULT NULL,
-  `email` varchar(256) DEFAULT NULL,
   `password` varchar(256) DEFAULT NULL,
+  `email` varchar(246) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +115,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (3,'Ivan','ivan@mail.ru','ivan'),(4,'Vladimir','vladimir@mail.ru','vladimir'),(5,'Katrin','katrin@mail.ru','katrin'),(6,'Simona','simona@mail.ru','simona');
+INSERT INTO `users` VALUES (3,'Vasya','Vasya','vas@vas.ru'),(4,'Katya','Katya','kat@kat.ru'),(5,'olya','r','r');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -103,5 +128,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-27 13:48:43
-
+-- Dump completed on 2014-10-04  5:34:52

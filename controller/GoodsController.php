@@ -23,6 +23,7 @@ class GoodsController extends BaseController {
         $this->view->basket = $this->getRequest()->getSessionValue('basket');
         $this->view->category = $this->getRequest()->getGetValue('cat');
         $this->view->goods = $this->getGoodService()->getList($this->view->category);
+       
         return 'list';
     }
     
@@ -88,4 +89,15 @@ class GoodsController extends BaseController {
     function indexAction() {
         return 'index';
     }
+    function  confirmOrderAction(){   
+   $basket = $this->getRequest()->getSessionValue('basket');
+   $this->view->user_name=$this->getRequest()->getSessionValue('loggedIn');
+   $this->getGoodService()->addOrder($basket, $this->view->user_name);          
+   $this->view->orders= $this->getGoodService()->getListOfOrder($this->view->user_name);
+   $this->getRequest()->setSessionValue('basket', []);
+   return 'confirmOrder';    
+   }
+    
 }
+
+  

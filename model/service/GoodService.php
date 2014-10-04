@@ -58,4 +58,36 @@ class GoodService {
         
         return $stmt->execute();
     }
+    function  addOrder($basket, $user_name){
+        if (count($basket)> 0) {                       
+            foreach ($basket as $id => $good) {
+                $stmt = \util\MySQL::$db->prepare("INSERT INTO orders "
+                . "(name, good, amount, sum) VALUES "
+                . "(:name, :good, :amount, :sum)");
+                   
+                $stmt->bindParam('name',$user_name );
+                $stmt->bindParam('good', $good['good']->getName());
+                $stmt->bindParam('amount', $good['amount']);
+                $stmt->bindParam('sum', $good['sum']);
+                $stmt->execute();
+            }            
+        }                                     
+        return $stmt->execute();       
+    }
+    
+    function getListOfOrder($user_name){
+        $orders = [];  
+        
+        $stmt = \util\MySQL::$db->prepare("SELECT id, good, amount, sum "
+                . " FROM orders WHERE name = :user");        
+        $stmt->bindParam('user', $user_name);        
+        $stmt->execute();
+        
+        foreach($stmt as $id=>$item) {      
+         $orders[] = $item;
+          }
+               
+        return $orders;
+    }   
+    
 }

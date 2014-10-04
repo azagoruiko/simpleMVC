@@ -6,7 +6,7 @@
             <?php
             $sum = 0;
             if (count($this->view->basket) == 0) {
-                echo "<li>Empty basket</li>";
+              echo "<li>Empty basket</li>";
             } else {
                 foreach ($this->view->basket as $id => $good) {
                     echo "<li>{$good['good']->getName()}, price: \${$good['good']->getPrice()}, amount: {$good['amount']}, sum: {$good['sum']} </li>";
@@ -16,6 +16,7 @@
             ?>
         </ul>
         <div><b>Total amount: <?php echo '$' . $sum; ?></b>&nbsp;<a class="btn btn-danger" href="index.php?ctrl=good&act=clearBasket&cat=<?php echo $this->view->category; ?>">Clear the basket</a></div>
+        <div><a class="btn btn-danger" href="index.php?ctrl=good&act=confirmOrder">To confirm the order</a></div>
         </div>
     <div class="col-md-8">
         <ul class="list-group">
