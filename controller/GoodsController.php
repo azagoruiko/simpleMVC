@@ -21,6 +21,8 @@ class GoodsController extends BaseController {
     
     function listAction() {
         $this->view->basket = $this->getRequest()->getSessionValue('basket');
+        //$this->getRequest()->setSessionValue('basket', []);
+        //print_r ($this->view->basket); die;
         $this->view->category = $this->getRequest()->getGetValue('cat');
         $this->view->goods = $this->getGoodService()->getList($this->view->category);
        
@@ -80,6 +82,26 @@ class GoodsController extends BaseController {
             $basket[$good->getID()]['sum'] += $good->getPrice();
         } else {
             $basket[$good->getID()] = ['amount' => 1, 'good' => $good, 'sum' => $good->getPrice()];
+        }
+        $r->setSessionValue('basket', $basket);
+        $this->redirect("index.php?ctrl=good&act=list&cat={$good->getCategory_id()}");
+    }
+    
+    function delAction() {
+        $r = $this->getRequest();
+        $basket = $r->getSessionValue('basket');
+         
+        
+        $good = $this->getGoodService()->find($r->getGetValue('id'));
+        if (isset($basket[$good->getID()])) {
+            if ($basket[$good->getID()]['amount']==1){
+                unset($basket[$good->getID()]);
+                //sort($basket);
+            }
+            else{
+            $basket[$good->getID()]['amount']--;
+            $basket[$good->getID()]['sum'] -= $good->getPrice();
+            }
         }
         $r->setSessionValue('basket', $basket);
         $this->redirect("index.php?ctrl=good&act=list&cat={$good->getCategory_id()}");

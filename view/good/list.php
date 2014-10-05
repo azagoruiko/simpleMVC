@@ -8,6 +8,7 @@
             if (!is_array($this->view->basket) || count($this->view->basket) == 0) {
               echo "<li>Empty basket</li>";
             } else {
+                
                 foreach ($this->view->basket as $id => $good) {
                     echo "<li>{$good['good']->getName()}, price: \${$good['good']->getPrice()}, amount: {$good['amount']}, sum: {$good['sum']} </li>";
                     $sum += $good['sum'];
@@ -23,7 +24,8 @@
             <?php 
             foreach ($this->view->goods as $good) {
                 echo "<li class=\"list-group-item\">{$good->getName()}, \${$good->getPrice()} "
-                . "&nbsp; <a class=\"btn btn-info\" href=\"index.php?ctrl=good&act=buy&id={$good->getID()}\">Buy</a>";
+                . "&nbsp; <a class=\"btn btn-info\" href=\"index.php?ctrl=good&act=buy&id={$good->getID()}\">Buy</a>"
+                . "&nbsp; <a class=\"btn btn-danger\" href=\"index.php?ctrl=good&act=del&id={$good->getID()}\">Remove from basket</a>";
                 if (isset($_SESSION['admin'])&& $_SESSION['admin']==='Yes'){
                     echo "&nbsp; <a class=\"btn btn-warning\" href=\"index.php?ctrl=good&act=edit&id={$good->getID()}\">edit</a>";
                 }
