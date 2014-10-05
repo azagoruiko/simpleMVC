@@ -33,8 +33,11 @@ class FrontController {
         if (empty($action)) {
             $action = 'index';
         }
-        $view = $ctrl->{"{$action}Action"}();
         $layOut = new Layout();
+        $ctrl->setLayout($layOut);
+        
+        $view = $ctrl->{"{$action}Action"}();
+        
         $layOut->setCtrlName($ctrlName);
         $layOut->setView($this->view);
         $layOut->render($view);

@@ -7,6 +7,10 @@ class Layout {
     private $viewName;
     private $view;
     private $ctrlName;
+
+    public function setDisableLayout($disableLayout) {
+        $this->disableLayout = $disableLayout;
+    }
     
     public function getViewName() {
         return $this->viewName;
@@ -28,10 +32,6 @@ class Layout {
     public function getDisableLayout() {
         return $this->disableLayout;
     }
-
-    public function setDisableLayout($disableLayout) {
-        $this->disableLayout = $disableLayout;
-    }
     
     public function getView() {
         return $this->view;
@@ -51,14 +51,21 @@ class Layout {
 
     public function render($viewName){
         if ($this->disableLayout) {
-            require "view/$viewName.php";
+            $fileName = "view/$viewName.php";
+            if (file_exists($fileName)){
+                require $fileName;
+            } else {
+                echo $viewName;
+            }
         } else {
             $fileName = "layout/{$this->layoutName}.php";
             if (!file_exists($fileName)){
                 throw new \RuntimeException('Нэту такого файла!');
+                //echo $fileName;
+            } else {
+                $this->viewName = $viewName;
+                require $fileName;
             }
-            $this->viewName = $viewName;
-            require $fileName;
         }
     }
     public function view() {

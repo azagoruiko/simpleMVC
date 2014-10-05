@@ -1,5 +1,7 @@
 <html>
     <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="js/main.js"></script>
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
     </head>
     <body>
@@ -20,10 +22,10 @@
         </nav>
         <div class="container">
             <div class="jumbotron">
-                <h1>The Shop!</h1>
+                <h1 lang="en">The Shop!</h1>
                 <?php $this->view() ?>
             </div>
-            <div>&copy; Computer Academy STEP 2014</div>
+            <div lang="en">&copy; Computer Academy STEP 2014</div>
         </div>
         
     </body>
