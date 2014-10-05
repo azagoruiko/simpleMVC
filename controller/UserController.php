@@ -41,9 +41,16 @@ class UserController extends BaseController {
         return 'users';//
     }//
     
+    function exitAction() {//
+        session_unset();
+        return 'exit';//
+    }//
+    
     function editUserAction() {//
         $r = $this->getRequest();//
-        
+        if($_SESSION['admin']!=='Yes'){
+            $this->view->message = 'Access denied!';
+        }
         if (!empty($r->getGetValue('id'))) {//
             $user = $this->getUserService()->find($r->getGetValue('id'));//
         } else {//
@@ -60,6 +67,7 @@ class UserController extends BaseController {
             $user->setName($r->getPostValue('name'));
             $user->setEmail($r->getPostValue('email'));
             $user->setPassword($r->getPostValue('password'));
+            $user->setIsAdmin($r->getPostValue('isAdmin'));
             if (!$this->getUserService()->addUser($user)) {//
                 $error = \util\MySQL::$db->errorInfo();//
                 print_r($error);//

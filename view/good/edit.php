@@ -1,6 +1,9 @@
 <html>
     <body>
         <div style="color: red;"><?php echo $this->view->message; ?></div>
+        <?php 
+        if($_SESSION['admin']==='Yes'){ 
+            ?>
         <form method="post" action="index.php?ctrl=good&act=edit">
             <input type="hidden" value="<?php echo $this->view->good->getId(); ?>" name="id" />
             <label for="name">Name:</label>
@@ -16,6 +19,7 @@
                 <?php } ?>
             </select>
             <input type="submit" />
+        <?php } ?>
         </form>
     </body>
 </html>

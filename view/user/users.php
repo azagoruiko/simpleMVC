@@ -3,13 +3,20 @@
         <title>List of users.</title>
     </head>
     <body>
-        <ul>
-            <?php 
-            foreach ($this->view->users as $user) {
-                echo "<li>{$user->getName()}, \${$user->getEmail()}, \${$user->getPassword()}) (<a href=\"index.php?ctrl=user&act=editUser&id={$user->getId()}\">edit</a>)</li>";
+        <?php 
+            if(!empty($_SESSION['loggedIn'])){
+                if ($_SESSION['admin']==='Yes'){ 
+                    ?>
+                    <ul>
+                    <?php 
+                    foreach ($this->view->users as $user) {
+                        echo "<li>{$user->getName()}, {$user->getEmail()}, {$user->getPassword()}  {$user->getIsAdmin()} (<a href=\"index.php?ctrl=user&act=editUser&id={$user->getId()}\">edit</a>)</li>";                  
+                    ?>
+                    </ul> <?php } ?>
+                    <a href="index.php?ctrl=user&act=editUser">add new</a> <?php }
+                else { echo "You do not have access to this page!"; }
             }
-            ?>
-        </ul>
-        <a href="index.php?ctrl=user&act=editUser">add new</a>
+            else { echo "You do not login!"; }
+            ?>      
     </body>
 </html>

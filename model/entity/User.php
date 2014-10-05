@@ -4,9 +4,10 @@ namespace model\entity;
 class User {
     private $id;
     private $name;
-    private $email;
+    private $email;   
     private $password;
-    
+    private $isAdmin;
+
     public function getName() {
         return $this->name;
     }
@@ -38,4 +39,11 @@ class User {
     public function setId($id) {
         $this->id = $id;
     }
+    public function getIsAdmin() {
+        return $this->isAdmin;
+    }
+
+    public function setIsAdmin($isAdmin) {
+        $this->isAdmin = $isAdmin;
+    }    
 }

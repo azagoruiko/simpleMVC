@@ -34,7 +34,9 @@ class GoodsController extends BaseController {
     
     function editAction() {
         $r = $this->getRequest();
-        
+        if($_SESSION['admin']!=='Yes'){
+            $this->view->message = 'Access denied!';
+        }
         if (!empty($r->getGetValue('id'))) {
             $good = $this->getGoodService()->find($r->getGetValue('id'));
         } else {
@@ -55,6 +57,8 @@ class GoodsController extends BaseController {
                 $error = \util\MySQL::$db->errorInfo();
                 print_r($error);
                 $this->view->message = 'Error! ' . $error[2];
+            }
+            else { $this->view->message = "Is Fain!";
             }
         }
         
