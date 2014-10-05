@@ -5,7 +5,7 @@
         <ul>
             <?php
             $sum = 0;
-            if (count($this->view->basket) == 0) {
+            if (!is_array($this->view->basket) || count($this->view->basket) == 0) {
               echo "<li>Empty basket</li>";
             } else {
                 foreach ($this->view->basket as $id => $good) {
