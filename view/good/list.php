@@ -32,7 +32,7 @@
                     echo "<li class=\"list-group-item\">{$good->getName()}, \${$good->getPrice()} "
                     . "&nbsp; <a class=\"btn btn-info\" href=\"index.php?ctrl=good&act=buy&id={$good->getID()}\">Buy</a>"
                     . "&nbsp; <a class=\"btn btn-danger\" href=\"index.php?ctrl=good&act=del&id={$good->getID()}\">Remove from basket</a>";
-                    if (isset($_SESSION['admin']) && $_SESSION['admin'] === 'Yes') {
+                    if (isset($_SESSION['admin']) && $_SESSION['admin']) {
                         echo "&nbsp; <a class=\"btn btn-warning\" href=\"index.php?ctrl=good&act=edit&id={$good->getID()}\">edit</a>";
                     }
                     echo "</li>";
@@ -41,7 +41,7 @@
             </ul>
 
             <?php
-            if (isset($_SESSION['admin']) && $_SESSION['admin'] === 'Yes') {
+            if (isset($_SESSION['admin']) && $_SESSION['admin']) {
                 echo '<a class="btn btn-success" href="index.php?ctrl=good&act=edit">add new</a>';
             }
 //         else { echo "= ".$_SESSION['admin'];}

@@ -5,7 +5,7 @@
     <body>
         <?php 
             if(!empty($_SESSION['loggedIn'])){
-                if ($_SESSION['admin']==='Yes'){ 
+                if ($_SESSION['admin']){ 
                     ?>
                     <ul>
                     <?php 

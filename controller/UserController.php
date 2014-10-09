@@ -48,7 +48,7 @@ class UserController extends BaseController {
     
     function editUserAction() {//
         $r = $this->getRequest();//
-        if($_SESSION['admin']!=='Yes'){
+        if(!$_SESSION['admin']){
             $this->view->message = 'Access denied!';
         }
         if (!empty($r->getGetValue('id'))) {//

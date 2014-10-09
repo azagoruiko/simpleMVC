@@ -44,7 +44,7 @@ class GoodsController extends BaseController {
     
     function editAction() {
         $r = $this->getRequest();
-        if($_SESSION['admin']!=='Yes'){
+        if(!$_SESSION['admin']){
             $this->view->message = 'Access denied!';
         }
         if (!empty($r->getGetValue('id'))) {
