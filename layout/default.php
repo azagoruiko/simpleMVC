@@ -17,6 +17,7 @@
                     <li><a href="index.php?ctrl=user&act=exit">Exit</a></li>                 
                     <?php } ?>
                     <li><a href="index.php?ctrl=user&act=users">Browse users</a></li>
+                    <li><a href="index.php?ctrl=user&act=signin">Signin</a></li>
                 </ul>
             </div>
         </nav>

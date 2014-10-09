@@ -48,7 +48,7 @@ class UserController extends BaseController {
     
     function editUserAction() {//
         $r = $this->getRequest();//
-        if(!$_SESSION['admin']){
+        if(isset($_SESSION['admin']) && !$_SESSION['admin']){
             $this->view->message = 'Access denied!';
         }
         if (!empty($r->getGetValue('id'))) {//
@@ -81,5 +81,34 @@ class UserController extends BaseController {
         $this->view->user = $user;//
         $this->view->users = $this->getUserService()->getUserList();//
         return 'editUser';//
+    }
+    
+    function signinAction() {//
+        $r = $this->getRequest();//
+            $user = new User();//       
+        if (!$user) {//
+            $this->view->message = 'User not found! Will create a new one!';
+            $user = new User();//
+        }//
+        
+        if ($r->isPost()) {//
+            $user->setId($r->getPostValue('id'));
+            $user->setName($r->getPostValue('name'));
+            $user->setEmail($r->getPostValue('email'));
+            $user->setPassword($r->getPostValue('password'));
+            $user->setIsAdmin('0');
+            if (!$this->getUserService()->addUser($user)) {//
+                $error = \util\MySQL::$db->errorInfo();//
+                print_r($error);//
+                $this->view->message = 'Error! ' . $error[2];//
+            }//
+            else {
+                $this->view->message = "Is Fain!";
+        }
+        }//
+        
+        $this->view->user = $user;//
+        $this->view->users = $this->getUserService()->getUserList();//
+        return 'signin';//
     }
 }
