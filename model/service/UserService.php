@@ -56,13 +56,19 @@ class UserService {
             $stmt = \util\MySQL::$db->prepare("UPDATE users SET name=:name, email=:email, password=:password, isAdmin=:isAdmin where id=:id");//
             $stmt->bindParam('id', $user->getId());//
         }//
-        
-        
+            
         $stmt->bindParam('name', $user->getName());//
         $stmt->bindParam('email', $user->getEmail());//
         $stmt->bindParam('password', $user->getPassword());//
         $stmt->bindParam('isAdmin', $user->getIsAdmin());
         
         return $stmt->execute();//
+    }
+    
+    function deleteUser($id) {//
+            $stmt = \util\MySQL::$db->prepare("DELETE FROM users where id=:id");//
+            $stmt->bindParam('id', $id);//
+            $stmt->execute();//
+            return $stmt->fetchObject('model\entity\User');//
     }
 }

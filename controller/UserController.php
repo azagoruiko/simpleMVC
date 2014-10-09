@@ -111,4 +111,22 @@ class UserController extends BaseController {
         $this->view->users = $this->getUserService()->getUserList();//
         return 'signin';//
     }
+    
+     function deleteAction() {//
+        $r = $this->getRequest();//
+        if(isset($_SESSION['admin']) && !$_SESSION['admin']){
+            $this->view->message = 'Access denied!';
+        }
+        if (!empty($r->getGetValue('id'))) {//
+            $user = $this->getUserService()->deleteUser($r->getGetValue('id'));//
+        }
+        
+        if (!$user) {//
+            $this->view->message = 'User not found! Will create a new one!';
+            //$user = new User();//
+        }//      
+        $this->view->user = $user;//
+        $this->view->users = $this->getUserService()->getUserList();//
+        return 'users';//
+    }
 }
