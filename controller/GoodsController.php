@@ -17,6 +17,7 @@ class GoodsController extends BaseController {
     }
     
     private function setBasket($basket) {
+        ksort($basket);
         $this->getRequest()->setSessionValue('basket', $basket);
     }
     
@@ -77,6 +78,12 @@ class GoodsController extends BaseController {
         return 'edit';
     }
     
+    function basketJsonAction() {
+        header('Content-Type: text/json');
+        echo json_encode($this->getBasket());
+        exit();
+    }
+    
     function buyAction() {
         $r = $this->getRequest();
         $basket = $r->getSessionValue('basket');
@@ -84,15 +91,23 @@ class GoodsController extends BaseController {
             $basket = [];
         }
         
-        $good = $this->getGoodService()->find($r->getGetValue('id'));
+        $good = $this->getGoodService()->find($r->getPostValue('id'));
+        if (!$good) {
+            http_response_code(404);
+            echo "0";
+            exit();
+        }
         if (isset($basket[$good->getID()])) {
             $basket[$good->getID()]['amount']++;
             $basket[$good->getID()]['sum'] += $good->getPrice();
         } else {
             $basket[$good->getID()] = ['amount' => 1, 'good' => $good, 'sum' => $good->getPrice()];
         }
-        $r->setSessionValue('basket', $basket);
-        $this->redirect("index.php?ctrl=good&act=list&cat={$good->getCategory_id()}");
+        ksort($basket);
+        $this->setBasket($basket);
+        header('Content-Type: text/json');
+        echo json_encode($basket);
+        exit();
     }
     
     private function delBasketItem(&$basket, $id) {

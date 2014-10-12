@@ -2,7 +2,7 @@
 
 namespace model\entity;
 
-class Good {
+class Good implements \JsonSerializable {
     private $id;
     private $description;
     private $name;
@@ -49,5 +49,12 @@ class Good {
         $this->description = $description;
     }
 
+    public function jsonSerialize() {
+        $object = new \stdClass();
+        foreach ($this as $key => $val) {
+            $object->$key = $val;
+        }
+        return $object;
+    }
 
 }
