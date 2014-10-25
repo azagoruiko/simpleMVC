@@ -67,6 +67,32 @@ INSERT INTO `goods` VALUES (19,'w','w',4.00,4),(20,'r','rt',5.00,3),(21,'ty','t'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `order_info`
+--
+
+DROP TABLE IF EXISTS `order_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `order_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idUser` int(11) DEFAULT NULL,
+  `idOrder` int(11) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `address` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_info`
+--
+
+LOCK TABLES `order_info` WRITE;
+/*!40000 ALTER TABLE `order_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `orders`
 --
 
@@ -75,12 +101,12 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) DEFAULT NULL,
-  `good` varchar(256) DEFAULT NULL,
+  `idOrder` int(11) DEFAULT NULL,
+  `idGood` int(11) DEFAULT NULL,
   `amount` int(11) DEFAULT NULL,
-  `sum` double DEFAULT NULL,
+  `price` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=255 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +115,6 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (116,'Katya','r',1,5),(117,'Katya','ty',1,7),(118,'Katya','ty',1,7);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,6 +130,7 @@ CREATE TABLE `users` (
   `name` varchar(256) DEFAULT NULL,
   `password` varchar(256) DEFAULT NULL,
   `email` varchar(246) DEFAULT NULL,
+  `isAdmin` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -115,7 +141,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (3,'Vasya','Vasya','vas@vas.ru'),(4,'Katya','Katya','kat@kat.ru'),(5,'olya','r','r');
+INSERT INTO `users` VALUES (3,'Vasya','Vasya','vas@vas.ru','1'),(4,'Katya','Katya','kat@kat.ru',NULL),(5,'olya','r','r',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -128,4 +154,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-04  5:34:52
+-- Dump completed on 2014-10-25 16:41:49

@@ -11,7 +11,7 @@
         <div><b>Total amount: <span id="sum"><?php echo '$' . $sum; ?></span></b></div>
         <div class="row">
             <a class="btn btn-danger" href="index.php?ctrl=good&act=clearBasket&cat=<?php echo $this->view->category; ?>">Clear the basket</a>  
-            <a class="btn btn-success" href="index.php?ctrl=good&act=confirmOrder">To confirm the order</a>
+            <a class="btn btn-success" href="index.php?ctrl=good&act=insertDataOrder">To confirm the order</a>
         </div>
     </div>
         <div class="col-md-8">

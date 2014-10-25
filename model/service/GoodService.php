@@ -9,8 +9,7 @@ class GoodService {
         $stmt = \util\MySQL::$db->prepare("SELECT id, name, description, price, category_id "
                 . " FROM goods WHERE category_id = :cat_id");
         
-        $stmt->bindParam('cat_id', $category);
-        
+        $stmt->bindParam('cat_id', $category);        
         $stmt->execute();
         while ($item = $stmt->fetchObject('model\entity\Good')) {
             $goods[] = $item;
@@ -58,29 +57,43 @@ class GoodService {
         
         return $stmt->execute();
     }
-    function  addOrder($basket, $user_name){
+    function  addOrder($basket, $idOrder){
         if (count($basket)> 0) {                       
             foreach ($basket as $id => $good) {
                 $stmt = \util\MySQL::$db->prepare("INSERT INTO orders "
-                . "(name, good, amount, sum) VALUES "
-                . "(:name, :good, :amount, :sum)");
+                . "(idOrder, idGood, amount, price) VALUES "
+                . "(:idOrder, :idGood, :amount, :price)");
                    
-                $stmt->bindParam('name',$user_name );
-                $stmt->bindParam('good', $good['good']->getName());
+                $stmt->bindParam('idOrder',$idOrder );
+                $stmt->bindParam('idGood', $good['good']->getId());
                 $stmt->bindParam('amount', $good['amount']);
-                $stmt->bindParam('sum', $good['sum']);
+                $stmt->bindParam('price', $good['good']->getPrice());
                 $stmt->execute();
-            }            
+            }           
         }                                     
         return $stmt->execute();       
     }
     
-    function getListOfOrder($user_name){
-        $orders = [];  
+    function  addOrderInfo($idOrder,$idUser,$date, $address){
         
-        $stmt = \util\MySQL::$db->prepare("SELECT id, good, amount, sum "
-                . " FROM orders WHERE name = :user");        
-        $stmt->bindParam('user', $user_name);        
+            $stmt = \util\MySQL::$db->prepare("INSERT INTO order_info "
+                . "(idUser, idOrder, date, address) VALUES "
+                . "(:idUser, :idOrder, :date, :address)");
+                   
+                $stmt->bindParam('idUser',$idUser );
+                $stmt->bindParam('idOrder',$idOrder);
+                $stmt->bindParam('date',$date );
+                $stmt->bindParam('address',$address);
+                $stmt->execute();
+            
+                                            
+        return $stmt->execute();       
+    }
+    function getListOfOrder($idOrder){
+        $orders = [];         
+        $stmt = \util\MySQL::$db->prepare("SELECT idOrder, name, amount, orders.price "
+                . " FROM orders INNER JOIN goods WHERE idOrder = :idOrder AND goods.id=idGood");        
+        $stmt->bindParam('idOrder', $idOrder);        
         $stmt->execute();
         
         foreach($stmt as $id=>$item) {      
@@ -89,5 +102,13 @@ class GoodService {
                
         return $orders;
     }   
-    
+    function getIdOder(){
+       $stmt = \util\MySQL::$db->prepare("SELECT MAX(idOrder) AS idOrder FROM order_info");
+       $stmt->execute();
+       if(isset($stmt)){ $s =$stmt->fetchObject()->idOrder+1;
+               return $s;
+       }else { 
+        return 1;            
+       }        
+    }
 }

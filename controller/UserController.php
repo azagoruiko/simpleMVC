@@ -26,6 +26,7 @@ class UserController extends BaseController {
                     $request->getPostValue('name'),
                     $request->getPostValue('password'))) {
                 $this->getRequest()->setSessionValue('loggedIn', $request->getPostValue('name'));
+                $this->getRequest()->setSessionValue('idUser', $this->getUserService()->findByName($request->getPostValue('name'))->getId());
                 $this->redirect('index.php?ctrl=good&act=categories');
             } else {
                 $this->view->message = 'Login incorrect';

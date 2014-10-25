@@ -149,13 +149,25 @@ class GoodsController extends BaseController {
     function indexAction() {
         return 'index';
     }
+    function  insertDataOrderAction(){   
+   return 'insertDataOrder'; 
+   }
     function  confirmOrderAction(){   
-   $basket = $this->getRequest()->getSessionValue('basket');
-   $this->view->user_name=$this->getRequest()->getSessionValue('loggedIn');
-   $this->getGoodService()->addOrder($basket, $this->view->user_name);          
-   $this->view->orders= $this->getGoodService()->getListOfOrder($this->view->user_name);
-   $this->getRequest()->setSessionValue('basket', []);
-   return 'confirmOrder';    
+   $request = $this->getRequest();    
+   $basket = $request->getSessionValue('basket');   
+   $this->view->idUser=$request->getSessionValue('idUser');
+   $this->view->loggedIn=$request->getSessionValue('loggedIn');
+   $this->view->io=$this->getGoodService()->getIdOder();
+   $this->getGoodService()->addOrder($basket,$this->view->io);
+   $this->getGoodService()->addOrderInfo($this->view->io,$request->getSessionValue('idUser'),$request->getPostValue('date'),$request->getPostValue('address'));
+   $this->view->date=$request->getPostValue('date');
+   $this->view->address=$request->getPostValue('address');
+   $this->view->orders= $this->getGoodService()->getListOfOrder($this->view->io);
+   $request->setSessionValue('basket', []);
+  // $request->setSessionValue('idOrder', $this->getGoodService()->getIdOder());
+   
+   return 'confirmOrder';  
+ 
    }
     
 }
